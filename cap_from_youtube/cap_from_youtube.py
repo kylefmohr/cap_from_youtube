@@ -14,12 +14,11 @@ class VideoStream:
 
     def __init__(self, video_format):
         self.url = video_format['url']
-        self.resolution = video_format['format_note']
         self.height = video_format['height']
         self.width = video_format['width']
 
     def __str__(self):
-        return f'{self.resolution} ({self.height}x{self.width}): {self.url}'
+        return f'({self.height}x{self.width}): {self.url}'
 
 
 def list_video_streams(url):
