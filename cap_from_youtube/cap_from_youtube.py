@@ -16,7 +16,8 @@ class VideoStream:
         self.url = video_format['url']
         self.height = video_format['height']
         self.width = video_format['width']
-        self.resolution = f'{self.height}x{self.width}'
+        self.frame_rate = video_format['fps']
+        self.resolution = f'{self.height}p{self.frame_rate}'
 
     def __str__(self):
         return f'({self.height}x{self.width}): {self.url}'
@@ -34,7 +35,7 @@ def list_video_streams(url):
                    for format in info['formats'][::-1]
                    if format['vcodec'] != 'none']
         _, unique_indices = np.unique(np.array([stream.resolution
-                                                for stream in streams]), return_index=True, axis=0)
+                                                for stream in streams]), return_index=True)
         streams = [streams[index] for index in np.sort(unique_indices)]
         resolutions = np.array([stream.resolution for stream in streams])
         return streams[::-1], resolutions[::-1]
