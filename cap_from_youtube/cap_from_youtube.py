@@ -41,8 +41,6 @@ def list_video_streams(url):
 
 
 def cap_from_youtube(url, resolution=None):
-    cap = None
-
     streams, resolutions = list_video_streams(url)
 
     if not resolution or resolution == 'best':
