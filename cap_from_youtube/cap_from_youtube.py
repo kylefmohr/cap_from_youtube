@@ -16,6 +16,7 @@ class VideoStream:
         self.url = video_format['url']
         self.height = video_format['height']
         self.width = video_format['width']
+        self.resolution = f'{self.height}x{self.width}'
 
     def __str__(self):
         return f'({self.height}x{self.width}): {self.url}'
