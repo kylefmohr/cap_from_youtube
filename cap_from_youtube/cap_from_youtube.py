@@ -70,5 +70,5 @@ if __name__ == '__main__':
     youtube_url = 'https://youtu.be/LXb3EKWsInQ'
     streams, resolutions = list_video_streams(youtube_url)
 
-    for stream in streams:
-        print(stream)
+    for resolution in resolutions:
+        print(resolution)
