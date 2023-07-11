@@ -35,8 +35,10 @@ def list_video_streams(url):
                    for format in info['formats'][::-1]
                    if format['vcodec'] != 'none']
         # Get the unique resolutions
-        _, unique_indices = np.unique(np.array([stream.resolution
-                                                for stream in streams]), return_index=True)
+        resolutions = [stream.resolution for stream in streams if stream.resolution is not None]
+        _, unique_indices = np.unique(np.array(resolutions), return_index=True)
+        # _, unique_indices = np.unique(np.array([stream.resolution
+        #                                         for stream in streams]), return_index=True)
 
         # Sort the streams by resolution, highest to lowest
         streams = [streams[index] for index in np.sort(unique_indices)]
@@ -62,23 +64,10 @@ def cap_from_youtube(url, resolution=None):
 
 if __name__ == '__main__':
 
-    def test_video(cap, vid_res):
-        num_frames = 100
-        for i in range(num_frames):
-            start_time = time.perf_counter()
-            ret, frame = cap.read()
-            # print(f'Frame process time: {time.perf_counter() - start_time}s')
-            if not ret:
-                break
-            cv2.imshow(f'{vid_res}', frame)
-            cv2.waitKey(1)
-        cap.release()
+    from cap_from_youtube import list_video_streams
 
+    youtube_url = 'https://youtu.be/LXb3EKWsInQ'
+    streams, resolutions = list_video_streams(youtube_url)
 
-    youtube_url = 'https://youtu.be/XqZsoesa55w'
-
-    _, resolutions = list_video_streams(youtube_url)
-    resolutions = np.append(resolutions, 'best')
-    for vid_res in resolutions:
-        cap = cap_from_youtube(youtube_url, vid_res)
-        test_video(cap, vid_res)
+    for stream in streams:
+        print(stream)
