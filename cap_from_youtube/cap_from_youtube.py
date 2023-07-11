@@ -35,6 +35,7 @@ def list_video_streams(url):
                    for format in info['formats'][::-1]
                    if format['vcodec'] != 'none']
         # Get the unique resolutions
+        print(len(streams))
         resolutions = [stream.resolution for stream in streams if stream.resolution is not None]
         _, unique_indices = np.unique(np.array(resolutions), return_index=True)
         # _, unique_indices = np.unique(np.array([stream.resolution
