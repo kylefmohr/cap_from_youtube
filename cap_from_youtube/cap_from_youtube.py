@@ -34,11 +34,18 @@ def list_video_streams(url):
         streams = [VideoStream(format)
                    for format in info['formats'][::-1]
                    if format['vcodec'] != 'none']
+        # Get the unique resolutions
         _, unique_indices = np.unique(np.array([stream.resolution
                                                 for stream in streams]), return_index=True)
+
+        # Sort the streams by resolution, highest to lowest
         streams = [streams[index] for index in np.sort(unique_indices)]
+
+        # Reverse the arrays to start with the highest resolution
         resolutions = np.array([stream.resolution for stream in streams])
-        return streams[::-1], resolutions[::-1]
+        resolutions = resolutions[::-1]
+        streams = streams[::-1]
+        return streams, resolutions
 
 
 def cap_from_youtube(url, resolution=None):
